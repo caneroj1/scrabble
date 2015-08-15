@@ -6,6 +6,7 @@ import (
   "strconv"
   "github.com/caneroj1/scrabble/go/player"
   "github.com/caneroj1/scrabble/go/reader"
+  "github.com/caneroj1/scrabble/go/game"
 )
 
 func main() {
@@ -19,14 +20,14 @@ func main() {
     os.Exit(1)
   }
 
-  if numPlayers < 0 {
-    fmt.Println("The number of players cannot be negative.")
+  if numPlayers < 2 {
+    fmt.Println("Please play with more people than that.")
     os.Exit(1)
   }
 
   players := player.CreatePlayers(int(numPlayers))
-
-  for i, v := range players {
-    fmt.Printf("Player %d: %s\n", i + 1, v.Name)
-  }
+  g := game.Game { Players: players }
+  g.ShufflePlayers()
+  g.Play()
+  g.Finish()
 }
